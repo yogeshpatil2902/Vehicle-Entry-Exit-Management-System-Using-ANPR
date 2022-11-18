@@ -1,0 +1,107 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="container">
+        <form action="#" method="POST" enctype="multipart/form-data">
+            <p style="color: red">Upload Image in the format of (.jpeg or .png) and Video in the format of (.mp4)</p>
+            <div class="input-group">
+                <input type="file" class="form-control" name="image_name" required>
+                <input type="submit" value="Upload" class="btn btn-outline-secondary">
+            </div>
+        </form>
+    </div>
+
+    {% if upload %}
+        <div class="container">
+            <table>
+                <tr>
+                    <td>
+                        {% if name == ".jpeg" or ".png" %}
+                        <img class="rounded float-left img-fluid" src="/static/uploads/{{ upload_image }}" alt="">
+                        {% endif %}
+
+                        {% if name == ".mp4" %}
+                        <video width="500" height="500" controls>
+                            <source src='./static/uploads/{{upload_image}}', type="video/mp4">   
+                        </video>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if name == ".jpeg" or ".png" %}
+                        <img class="rounded float-left img-fluid" src="/static/predict/{{ upload_image }}" alt="">
+                        {% endif %}
+
+                        {% if name == ".mp4" %}
+                        <video width="500" height="500" controls>
+                            <source src="./static/predict/{{upload_image}}", type="video/mp4">
+                        </video>
+                        {% endif %}
+                    </td>
+                    
+                   
+                </tr>
+
+            </table>
+            <br>
+            <table style="border: solid black; width: 100%;">
+                <tr style="border: solid black;">
+                    <th>Licence Plate Detected </th>
+                </tr>
+                
+                  
+                <tr style="border: solid black;">
+                {% if user == 'Authorized' %}
+                <td style="background-color: rgb(9, 122, 11);">
+                    <p class="display-2"> {{ text }}</p>
+                </td>
+                <td style="background-color: rgb(9, 122, 11);">
+                    <p class="display-6"> Authorized Person </p>
+                </td>
+                {% endif%}
+                </tr>
+
+                <tr style="border: solid black;">
+                {% if user == 'Unauthorized' %}
+                    <td style="background-color: rgb(227, 10, 10);">
+                        <p class="display-2"> {{ text }}</p>
+                    </td>
+                    <td style="background-color: rgb(227, 10, 10);">
+                        <p class="display-6"> {{ User_Details }}</p>
+                    </td>
+                {% endif%}
+                </tr>
+ 
+            </table>
+            
+            {% if user == 'Authorized' %}
+            <h4> Employee Details</h4>
+
+            <table style="width:100%">
+              <tr style="border:1px solid black">
+                <th style="border:1px solid black">Employee ID</th>
+                <th style="border:1px solid black">Name</th>
+                <th style="border:1px solid black">Contact Details</th>
+                <th style="border:1px solid black">Licence Plate Details</th>
+              </tr>
+              <tr>
+                <td style="border:1px solid black">{{Eid}}</td>
+                <td style="border:1px solid black">{{Ename}}</td>
+                <td style="border:1px solid black">{{mob}}</td>
+                <td style="border:1px solid black">{{licence}}</td>
+              </tr>
+            </table>
+            {% endif %}
+        </div>
+        <br><br>
+
+    {% endif %}
+
+    {% if upload==False %}
+        <div class = "cdac_logo">
+            <img class="rounded float-left img-fluid" style="margin-left:26rem; margin-top:1rem;" src="/static/uploads/cdac.jpg" alt="CDAC Trademark">
+        </div>
+        <br><br>
+    {% endif %}
+
+{% endblock  %}
